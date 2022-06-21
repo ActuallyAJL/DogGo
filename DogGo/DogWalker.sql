@@ -159,3 +159,5 @@ INSERT INTO Walks ([Date], Duration, WalkerId, DogId) VALUES ('2020-04-10 12:00:
 INSERT INTO Walks ([Date], Duration, WalkerId, DogId) VALUES ('2020-04-08 09:00:00', 1275, 3, 7);
 INSERT INTO Walks ([Date], Duration, WalkerId, DogId) VALUES ('2020-04-09 13:30:00', 2000, 4, 4);
 INSERT INTO Walks ([Date], Duration, WalkerId, DogId) VALUES ('2020-04-09 13:30:00', 2000, 4, 5);
+
+SELECT * FROM Dog;
