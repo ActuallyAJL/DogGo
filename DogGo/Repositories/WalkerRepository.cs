@@ -72,6 +72,7 @@ namespace DogGo.Repositories
                     cmd.CommandText = @"
                         SELECT Walker.Id AS WalkerId, Walker.[Name] AS WalkerName, ImageUrl, NeighborhoodId, Neighborhood.[Name] AS NeighborhoodName
                         FROM Walker LEFT JOIN Neighborhood ON Neighborhood.Id = Walker.NeighborhoodId
+                        WHERE Walker.Id = @id
                     ";
 
                     cmd.Parameters.AddWithValue("@id", id);

@@ -32,8 +32,8 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], OwnerId, Breed, Notes, ImageUrl
-                        FROM Dog
+                        SELECT d.Id AS DogId, d.[Name] AS DogName, d.OwnerId AS OwnerId, d.Breed AS DogBreed, d.Notes AS DogNotes, d.ImageUrl AS DogUrl, o.Name AS OwnerName
+                        FROM Dog d LEFT JOIN Owner o on Dog.OwnerId = Owner.Id
                     ";
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -43,12 +43,16 @@ namespace DogGo.Repositories
                         {
                             Dog dog = new Dog
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Id = reader.GetInt32(reader.GetOrdinal("DogId")),
+                                Name = reader.GetString(reader.GetOrdinal("DogName")),
                                 OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
-                                Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                                Notes = !reader.IsDBNull(reader.GetOrdinal("Notes")) ? reader.GetString(reader.GetOrdinal("Notes")): " ",
-                                ImageUrl = !reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? reader.GetString(reader.GetOrdinal("ImageUrl")) : " "
+                                Breed = reader.GetString(reader.GetOrdinal("DogBreed")),
+                                Notes = !reader.IsDBNull(reader.GetOrdinal("DogNotes")) ? reader.GetString(reader.GetOrdinal("DogNotes")): " ",
+                                ImageUrl = !reader.IsDBNull(reader.GetOrdinal("DogUrl")) ? reader.GetString(reader.GetOrdinal("DogUrl")) : " ",
+                                Owner = new Owner
+                                {
+                                    Name = reader.GetString(reader.GetOrdinal("OwnerName"))
+                                }
                             };
 
                             dogs.Add(dog);
@@ -68,8 +72,8 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], OwnerId, Breed, Notes, ImageUrl
-                        FROM Dog
+                        SELECT d.Id AS DogId, d.[Name] AS DogName, d.OwnerId AS OwnerId, d.Breed AS DogBreed, d.Notes AS DogNotes, d.ImageUrl AS DogUrl, o.Name AS OwnerName
+                        FROM Dog d LEFT JOIN Owner o on Dog.OwnerId = Owner.Id
                         WHERE Id = @id
                     ";
 
@@ -81,12 +85,16 @@ namespace DogGo.Repositories
                         {
                             Dog dog = new Dog
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Id = reader.GetInt32(reader.GetOrdinal("DogId")),
+                                Name = reader.GetString(reader.GetOrdinal("DogName")),
                                 OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")),
-                                Breed = reader.GetString(reader.GetOrdinal("Breed")),
-                                Notes = !reader.IsDBNull(reader.GetOrdinal("Notes")) ? reader.GetString(reader.GetOrdinal("Notes")) : " ",
-                                ImageUrl = !reader.IsDBNull(reader.GetOrdinal("ImageUrl")) ? reader.GetString(reader.GetOrdinal("ImageUrl")) : " "
+                                Breed = reader.GetString(reader.GetOrdinal("DogBreed")),
+                                Notes = !reader.IsDBNull(reader.GetOrdinal("DogNotes")) ? reader.GetString(reader.GetOrdinal("DogNotes")) : " ",
+                                ImageUrl = !reader.IsDBNull(reader.GetOrdinal("DogUrl")) ? reader.GetString(reader.GetOrdinal("DogUrl")) : " ",
+                                Owner = new Owner
+                                {
+                                    Name = reader.GetString(reader.GetOrdinal("OwnerName"))
+                                }
                             };
 
                             return dog;
